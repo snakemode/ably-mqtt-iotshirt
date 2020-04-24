@@ -4,13 +4,16 @@
 
   async function connect() {
     const ably = new Ably.Realtime.Promise({ authUrl: '/api/createTokenRequest' });
-    const channelId = `[product:ably-tfl/tube]tube:northern:940GZZLUEUS:arrivals`;
+    const channelId = "tshirt";
     const channel = await ably.channels.get(channelId);
     await channel.attach();
+    
+    channel.publish("update", "hello");
 
     channel.subscribe(function(message) {
       console.log(message.data);
     }); 
+    
     console.log("Subscribed");
 
     const resultPage = await channel.history({ untilAttach: true, limit: 1 }); 
