@@ -1,5 +1,11 @@
 .item {
-    border: 15px solid black;
-    overflow: hidden;
+    border: 1px solid black;
     padding: 20px;
-  }    
+  margin: 10px;
+}
+
+.square {
+  fill: black;
+  cursor: pointer;
+}
+
