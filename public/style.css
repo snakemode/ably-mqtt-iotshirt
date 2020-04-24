@@ -1,0 +1,5 @@
+.historyContainer .item {
+    border: 15px solid black;
+    overflow: hidden;
+    padding: 20px;
+  }    
