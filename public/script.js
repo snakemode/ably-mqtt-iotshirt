@@ -11,9 +11,19 @@ function docReady(fn) {
 }    
 
 docReady(function() {
-  function send(e) {
-    console.log(e.target.id);
-  }
+  let square = document.getElementsByClassName('square');
+    for(let i = 0; i < square.length; i++) {
+      square[i].addEventListener("click", function(e){
+        console.log(e.target.id)
+      }, false);   
+   }
+  
+    let color = document.getElementsByClassName('color');
+    for(let i = 0; i < color.length; i++) {
+      color[i].addEventListener("click", function(e){
+        console.log(e.target.id)
+      }, false);   
+   }
   
   async function connect() {
     const ably = new Ably.Realtime.Promise({ authUrl: '/api/createTokenRequest' });
