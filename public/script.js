@@ -11,9 +11,10 @@ function docReady(fn) {
 }    
 
 docReady(function() {
-  const resultsDiv = document.getElementById("history");
-
-  console.log(resultsDiv);
+  function send(e) {
+    console.log(e.target.id);
+  }
+  
   async function connect() {
     const ably = new Ably.Realtime.Promise({ authUrl: '/api/createTokenRequest' });
     const channelId = "tshirt";
@@ -27,15 +28,6 @@ docReady(function() {
     }); 
     
     console.log("Subscribed");
-
-    const resultPage = await channel.history({ untilAttach: true, limit: 1 }); 
-
-    for (const item of resultPage.items) {
-      const result = document.createElement("div");
-      result.classList.add("item");
-      result.innerHTML = JSON.stringify(item.data);
-      resultsDiv.appendChild(result);
-    }
   }
   connect(); 
 });
