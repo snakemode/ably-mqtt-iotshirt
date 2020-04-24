@@ -20,25 +20,28 @@ docReady(function() {
   for(let i = 0; i < color.length; i++) {
     color[i].addEventListener("click", function(e){
       selected = e.target.id;
+      rgb = e.target.dataset.rgb;
+      console.log(rgb);
     }, false);   
   }
-  
-  for(let i = 0; i < square.length; i++) {
-    square[i].addEventListener("click", function(e){
-      pixel = e.target.id.replace('square', '');
-      console.log()
-      e.target.style.fill = selected;
-    }, false);   
-  }
-  
+    
   async function connect() {
     const ably = new Ably.Realtime.Promise({ authUrl: '/api/createTokenRequest' });
     const channelId = "tshirt";
     const channel = await ably.channels.get(channelId);
     await channel.attach();
     
-    channel.publish("color", "hello");
+    for(let i = 0; i < square.length; i++) {
+      square[i].addEventListener("click", function(e){
+        pixel = e.target.id.replace('square', '');
+        e.target.style.fill = selected;
+        channel.publish("tshirt", pixel +  rgb);
 
+      }, false);   
+    }
+    
+    
+   
     channel.subscribe(function(message) {
       console.log(message.data);
     }); 
