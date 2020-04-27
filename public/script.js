@@ -22,6 +22,14 @@ function colorAndPublish(e, channel) {
   pixel = e.target.id.replace('square', '');
   e.target.style.fill = selected;
   channel.publish("tshirt", pixel + rgb);
+  
+  // snake mode yo yo yo
+  const y = Math.floor(pixel / 16);
+  const shouldSnake = y % 2 == 0;
+  const snakeX = pixel % 16;
+  
+  console.log(y, shouldSnake, "snakeX", snakeX);
+  
 }
 
 async function connect() {
