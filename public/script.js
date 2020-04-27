@@ -1,9 +1,8 @@
- console.log("Oh hai! 🖤");
+console.log("Oh hai! 🖤");
 
-let color = document.getElementsByClassName('color');
-let square = document.getElementsByClassName('square');
+const color = document.getElementsByClassName('color');
+const square = document.getElementsByClassName('square');
 let selected = "white";
-let pixel = 0;
 let rgb = "#FFFFFF"
 
 function setActiveColor(e) {
@@ -13,38 +12,14 @@ function setActiveColor(e) {
 }
   
 for (let item of color) {
-  item.addEventListener("click", function(e){
-    setActiveColor(e);
-  }, false);   
+  item.addEventListener("click", setActiveColor, false);   
 }
 
 function colorAndPublish(e, channel) {
-  pixel = e.target.id.replace('square', '');
-  e.target.style.fill = selected;
-  
-  const pixelNumber = parseInt(pixel);
-  //const snakeId = getSnakeId(pixelNumber);
-  const snakeId = pixelNumber;
-  
-  channel.publish("tshirt", snakeId + rgb);  
+  let pixel = e.target.id.replace('square', '');
+  e.target.style.fill = selected;  
+  channel.publish("tshirt", pixel + rgb);  
 }
-
-/*
-// 🐍
-function getSnakeId(pixelNumber) {
-  const y = Math.floor(pixel / 16);
-  const shouldSnake = y % 2 == 0;
-  const lineOffset = y * 16;
-  
-  const regularX = (pixel % 16);
-  const snakeX = (15 - regularX);
-  
-  const x = shouldSnake ? snakeX : regularX;
-  const snakePixelId = x + (lineOffset);
-  
-  console.log(snakePixelId); 
-  return snakePixelId;
-}*/
 
 async function connect() {
   const ably = new Ably.Realtime.Promise({ authUrl: '/api/createTokenRequest' });
