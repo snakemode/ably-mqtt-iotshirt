@@ -31,15 +31,13 @@ function processSyncMessage(message) {
     const parts = compoundValue.split('#');
     const pixelNumber = parts[0];
     const pixelColor = ("#" + parts[1]).toLowerCase();
-    console.log(pixelNumber, pixelColor);
     
     const paddingPixelNumber = pixelNumber.padStart(3, '0')
     const id = "square" + paddingPixelNumber;
     const colourToFillWith = colorMap.filter(entry => entry.dataset.rgb == pixelColor)[0];
     const cssName = colourToFillWith.id;
     
-    const targetElement = document.getElementById(id);
-    targetElement.style.fill = cssName;
+    document.getElementById(id).style.fill = cssName;
   }
 }
 
@@ -48,8 +46,6 @@ function processMessage(message) {
   const value = data.constructor.name == "ArrayBuffer" 
                   ? new TextDecoder("utf-8").decode(data) 
                   : data;
-
-  //console.log(value);
   
   switch(value[0]) {
     case "C":
@@ -58,6 +54,8 @@ function processMessage(message) {
       processSyncMessage(value);
       break;
     default:
+      console.log("Single update", value);
+      processSyncMessage("S:" + value);
       break;
   } 
 }
