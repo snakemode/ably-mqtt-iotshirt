@@ -23,11 +23,13 @@ function colorAndPublish(e, channel) {
   e.target.style.fill = selected;
   
   const pixelNumber = parseInt(pixel);
-  const snakeId = getSnakeId(pixelNumber);
+  //const snakeId = getSnakeId(pixelNumber);
+  const snakeId = pixelNumber;
   
   channel.publish("tshirt", snakeId + rgb);  
 }
-       
+
+/*
 // 🐍
 function getSnakeId(pixelNumber) {
   const y = Math.floor(pixel / 16);
@@ -42,7 +44,7 @@ function getSnakeId(pixelNumber) {
   
   console.log(snakePixelId); 
   return snakePixelId;
-}
+}*/
 
 async function connect() {
   const ably = new Ably.Realtime.Promise({ authUrl: '/api/createTokenRequest' });
