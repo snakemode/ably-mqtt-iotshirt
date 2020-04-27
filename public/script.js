@@ -2,6 +2,8 @@ console.log("Oh hai! 🖤");
 
 const color = document.getElementsByClassName('color');
 const square = document.getElementsByClassName('square');
+const colorMap = [...document.querySelectorAll('[data-rgb]')];
+
 let selected = "white";
 let rgb = "#FFFFFF"
 
@@ -27,9 +29,17 @@ function processSyncMessage(message) {
   
   for (var compoundValue of pixelValues) {
     const parts = compoundValue.split('#');
-    const pixelNumber = parseInt(parts[0]);
-    const pixelColor = "#" + parts[1];
+    const pixelNumber = parts[0];
+    const pixelColor = ("#" + parts[1]).toLowerCase();
     console.log(pixelNumber, pixelColor);
+    
+    const paddingPixelNumber = pixelNumber.padStart(3, '0')
+    const id = "square" + paddingPixelNumber;
+    const colourToFillWith = colorMap.filter(entry => entry.dataset.rgb == pixelColor)[0];
+    const cssName = colourToFillWith.id;
+    
+    const targetElement = document.getElementById(id);
+    targetElement.style.fill = cssName;
   }
 }
 
