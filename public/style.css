@@ -71,6 +71,11 @@ h1 {
   border: 2px solid black;
 }
 
+.black {
+  background-color: black;
+  fill: black;
+}
+
 .array {
   margin-top: 10px;
 }
