@@ -28,8 +28,7 @@ function syncSinglePixel(compoundValue) {
   const pixelNumber = parts[0];
   const pixelColor = ("#" + parts[1]).toLowerCase();
 
-  const paddingPixelNumber = pixelNumber.padStart(3, '0')
-  const id = "square" + paddingPixelNumber;
+  const id = "square" + pixelNumber.padStart(3, '0');
   const colourToFillWith = colorMap.filter(entry => entry.dataset.rgb == pixelColor);
 
   if (colourToFillWith.length > 0) {
