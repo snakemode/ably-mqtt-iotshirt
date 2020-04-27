@@ -49,7 +49,9 @@ function processSyncMessage(message) {
 }
 
 function resetDisplay() {
-  console.log("This should reset.");
+  for (let item of square) {
+    item.style.fill = "black";
+  }
 }
 
 function processMessage(message) {
