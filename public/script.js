@@ -23,21 +23,28 @@ function colorAndPublish(e, channel) {
   channel.publish("tshirt", pixel + rgb);  
 }
 
+function syncSinglePixel(compoundValue) {
+  const parts = compoundValue.split('#');
+  const pixelNumber = parts[0];
+  const pixelColor = ("#" + parts[1]).toLowerCase();
+
+  const paddingPixelNumber = pixelNumber.padStart(3, '0')
+  const id = "square" + paddingPixelNumber;
+  const colourToFillWith = colorMap.filter(entry => entry.dataset.rgb == pixelColor);
+
+  if (colourToFillWith.length > 0) {
+    const cssName = colourToFillWith[0].id;    
+    document.getElementById(id).style.fill = cssName;
+  } else {      
+    console.log("Couldn't find the colour requested.");
+  }
+}
+
 function processSyncMessage(message) {
   const pixelValues = message.slice(2).split(',');
-  pixelValues.pop();
-  
+  pixelValues.pop();  
   for (var compoundValue of pixelValues) {
-    const parts = compoundValue.split('#');
-    const pixelNumber = parts[0];
-    const pixelColor = ("#" + parts[1]).toLowerCase();
-    
-    const paddingPixelNumber = pixelNumber.padStart(3, '0')
-    const id = "square" + paddingPixelNumber;
-    const colourToFillWith = colorMap.filter(entry => entry.dataset.rgb == pixelColor)[0];
-    const cssName = colourToFillWith.id;
-    
-    document.getElementById(id).style.fill = cssName;
+    syncSinglePixel(compoundValue);
   }
 }
 
@@ -54,8 +61,7 @@ function processMessage(message) {
       processSyncMessage(value);
       break;
     default:
-      console.log("Single update", value);
-      processSyncMessage("S:" + value);
+      syncSinglePixel(value);
       break;
   } 
 }
