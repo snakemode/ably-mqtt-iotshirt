@@ -4,7 +4,7 @@ let color = document.getElementsByClassName('color');
 let square = document.getElementsByClassName('square');
 let selected = "white";
 let pixel = 0;
-let rgb = "0,0,0"
+let rgb = "#FFFFFF"
 
 function setActiveColor(e) {
   selected = e.target.id;
@@ -21,9 +21,15 @@ for (let item of color) {
 function colorAndPublish(e, channel) {
   pixel = e.target.id.replace('square', '');
   e.target.style.fill = selected;
-  channel.publish("tshirt", pixel + rgb);
   
-  // snake mode yo yo yo
+  const pixelNumber = parseInt(pixel);
+  const snakeId = getSnakeId(pixelNumber);
+  
+  channel.publish("tshirt", snakeId + rgb);  
+}
+       
+// 🐍
+function getSnakeId(pixelNumber) {
   const y = Math.floor(pixel / 16);
   const shouldSnake = y % 2 == 0;
   const lineOffset = y * 16;
@@ -32,10 +38,10 @@ function colorAndPublish(e, channel) {
   const snakeX = (15 - regularX);
   
   const x = shouldSnake ? snakeX : regularX;
-  const orientatedX = x + (lineOffset);
+  const snakePixelId = x + (lineOffset);
   
-  console.log(y, shouldSnake, "orientatedX", orientatedX);
-  
+  console.log(snakePixelId); 
+  return snakePixelId;
 }
 
 async function connect() {
