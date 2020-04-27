@@ -48,6 +48,10 @@ function processSyncMessage(message) {
   }
 }
 
+function resetDisplay() {
+  console.log("This should reset.");
+}
+
 function processMessage(message) {
   const data = message.data;
   const value = data.constructor.name == "ArrayBuffer" 
@@ -56,6 +60,9 @@ function processMessage(message) {
   
   switch(value[0]) {
     case "C":
+      break;    
+    case "X":
+      resetDisplay();
       break;
     case "S":
       processSyncMessage(value);
