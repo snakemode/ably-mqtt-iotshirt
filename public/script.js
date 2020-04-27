@@ -31,7 +31,21 @@ async function connect() {
     cell.addEventListener("click", e => colorAndPublish(e, channel), false);   
   }
 
-  channel.subscribe(message => console.log(message.data));
+  channel.subscribe(message => { 
+    const data = message.data;
+    
+    if(data.constructor.name == "ArrayBuffer") { 
+      console.log("Buffer!");
+      const data = message.data.toString('utf-8');
+      console.log(data);
+    } else {
+      console.log(message.data);
+    }
+    
+  });
+  
+  channel.publish("tshirt", "C");
+  
   console.log("Subscribed");
 }
 
