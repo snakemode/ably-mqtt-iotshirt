@@ -21,6 +21,37 @@ function colorAndPublish(e, channel) {
   channel.publish("tshirt", pixel + rgb);  
 }
 
+function processSyncMessage(message) {
+  const pixelValues = message.slice(2).split(',');
+  pixelValues.pop();
+  
+  for (var compoundValue of pixelValues) {
+    const parts = compoundValue.split('#');
+    const pixelNumber = parseInt(parts[0]);
+    const pixelColor = "#" + parts[1];
+    console.log(pixelNumber, pixelColor);
+  }
+}
+
+function processMessage(message) {
+  const data = message.data;
+  const value = data.constructor.name == "ArrayBuffer" 
+                  ? new TextDecoder("utf-8").decode(data) 
+                  : data;
+
+  //console.log(value);
+  
+  switch(value[0]) {
+    case "C":
+      break;
+    case "S":
+      processSyncMessage(value);
+      break;
+    default:
+      break;
+  } 
+}
+
 async function connect() {
   const ably = new Ably.Realtime.Promise({ authUrl: '/api/createTokenRequest' });
   const channelId = "tshirt";
@@ -31,21 +62,8 @@ async function connect() {
     cell.addEventListener("click", e => colorAndPublish(e, channel), false);   
   }
 
-  channel.subscribe(message => { 
-    const data = message.data;
-    
-    if(data.constructor.name == "ArrayBuffer") { 
-      console.log("Buffer!");
-      const data = message.data.toString('utf-8');
-      console.log(data);
-    } else {
-      console.log(message.data);
-    }
-    
-  });
-  
-  channel.publish("tshirt", "C");
-  
+  channel.subscribe(processMessage);  
+  channel.publish("tshirt", "C");  
   console.log("Subscribed");
 }
 
