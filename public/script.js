@@ -26,9 +26,15 @@ function colorAndPublish(e, channel) {
   // snake mode yo yo yo
   const y = Math.floor(pixel / 16);
   const shouldSnake = y % 2 == 0;
-  const snakeX = pixel % 16;
+  const lineOffset = y * 16;
   
-  console.log(y, shouldSnake, "snakeX", snakeX);
+  const regularX = (pixel % 16);
+  const snakeX = (15 - regularX);
+  
+  const x = shouldSnake ? snakeX : regularX;
+  const orientatedX = x + (lineOffset);
+  
+  console.log(y, shouldSnake, "orientatedX", orientatedX);
   
 }
 
