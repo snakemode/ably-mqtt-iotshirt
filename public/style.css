@@ -1,5 +1,8 @@
 body {
   font-family: 'Raleway', sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 8px;
 }
 
 h1 {
