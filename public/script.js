@@ -59,8 +59,6 @@ function processMessage(message) {
                   ? new TextDecoder("utf-8").decode(data) 
                   : data;
   
-  console.log(value);
-  
   switch(value[0]) {
     case "C":
       break;    
