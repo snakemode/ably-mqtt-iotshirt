@@ -9,6 +9,10 @@ app.get("/", async (request, response) => {
   response.sendFile(__dirname + '/views/index.html');
 });
 
+app.get("/moderate", async (request, response) => {
+  response.sendFile(__dirname + '/views/moderate.html');
+});
+
 app.get("/api/createTokenRequest", async (request, response) => {
   const tokenRequestData = await client.auth.createTokenRequest({ clientId: 'ably-client-side-api-calls-demo' });
   response.send(tokenRequestData);

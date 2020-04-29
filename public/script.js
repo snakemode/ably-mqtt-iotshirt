@@ -80,13 +80,24 @@ async function connect() {
   const channel = await ably.channels.get(channelId);
   await channel.attach();
   
+  const onClick = (e) => colorAndPublish(e, channel);
   for (let cell of square) {
-    cell.addEventListener("click", e => colorAndPublish(e, channel), false);   
+    cell.addEventListener("click", onClick, false);   
   }
 
   channel.subscribe(processMessage);  
   channel.publish("tshirt", "C");  
   console.log("Subscribed");
+  
+  const moderation = document.getElementById('clear');
+  if (moderation) {
+    for (let cell of square) {
+      cell.removeEventListener("click", onClick, false);   
+    }
+    moderation.addEventListener("click", e => {      
+      channel.publish("tshirt", "X");  
+    });
+  }
 }
 
 connect(); 
