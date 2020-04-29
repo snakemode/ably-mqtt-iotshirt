@@ -14,10 +14,11 @@ app.get("/moderate", async (request, response) => {
 });
 
 app.get("/api/createTokenRequest", async (request, response) => {
-  const tokenRequestData = await client.auth.createTokenRequest({ clientId: 'ably-client-side-api-calls-demo' });
+  const tokenRequestData = await client.auth.createTokenRequest({ clientId: 'interactive-lights-ui' });
   response.send(tokenRequestData);
 });
 
-const listener = app.listen(process.env.PORT, () => {
+const port = process.env.PORT || 12271;
+const listener = app.listen(port, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });
