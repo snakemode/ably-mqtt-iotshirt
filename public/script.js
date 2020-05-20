@@ -83,7 +83,7 @@ async function connect() {
   const onClick = (e) => colorAndPublish(e, channel);
   for (let cell of square) {
     cell.addEventListener("click", onClick, false);   
-  }
+  } 
 
   channel.subscribe(processMessage);  
   channel.publish("tshirt", "C");  
